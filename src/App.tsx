@@ -21,16 +21,26 @@ if a function doesnt return anything type is Void
   const addTask = (): void => {
     const newTask = { taskName: task, deadline: deadline };
     setTodoList([...todoList, newTask]);
-    setTask('')
-    setDeadline(0)
-     
+    setTask("");
+    setDeadline(0);
   };
-
+  const removeTask = (taskNameToDelete: string): void => {
+    setTodoList(
+      todoList.filter((task) => {
+        return task.taskName !== taskNameToDelete;
+      })
+    );
+  };
   return (
     <div className="App">
       <div className="header">
         <div className="inputContainer">
-          <input placeholder="Task..." value={task} name="task" onChange={handleChange} />
+          <input
+            placeholder="Task..."
+            value={task}
+            name="task"
+            onChange={handleChange}
+          />
           <input
             type="number"
             name="deadline"
@@ -43,7 +53,7 @@ if a function doesnt return anything type is Void
       </div>
       <div className="toDoList">
         {todoList.map((task: ITask, key: number) => {
-          return <TodoTask key={key} task={task}/>
+          return <TodoTask key={key} removeTask={removeTask} task={task} />;
         })}
       </div>
     </div>
